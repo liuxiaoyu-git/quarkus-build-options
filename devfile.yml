@@ -2,10 +2,7 @@ apiVersion: 1.0.0
 metadata:
   name: build-options-quarkus65x59
 projects:
-  - name: build-options-quarkus
-    source:
-      location: 'https://github.com/nexus-Six/quarkus-build-options.git'
-      type: git
+  - name: build-options-quarkus    
 components:
   - id: redhat/quarkus-java11/latest
     type: chePlugin

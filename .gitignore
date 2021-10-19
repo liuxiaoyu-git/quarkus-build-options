@@ -37,3 +37,9 @@ nb-configuration.xml
 
 # Local environment
 .env
+
+oc
+odo
+launch.json
+kubectl
+README.md

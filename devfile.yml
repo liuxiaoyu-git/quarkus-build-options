@@ -3,7 +3,7 @@ metadata:
   name: build-options-quarkus65x59
 projects:
   - name: build-options-quarkus
-  source:
+    source:
       location: 'https://<OPENSHIFT_URI>/gitea/quarkus-build-options.git'
       type: git 
 components:

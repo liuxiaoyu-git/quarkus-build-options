@@ -3,10 +3,7 @@ metadata:
   name: build-options-quarkus65x59
 components:
   - id: redhat/quarkus-java11/latest
-    type: chePlugin
-  - id: redhat/vscode-openshift-connector/latest
-    type: chePlugin
-    alias: vscode-openshift
+    type: chePlugin  
   - mountSources: true
     endpoints:
       - name: quarkus-development-server
@@ -34,23 +31,17 @@ components:
       - value: '-XX:MaxRAMPercentage=50.0 -XX:+UseParallelGC -XX:MinHeapFreeRatio=10 -XX:MaxHeapFreeRatio=20 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xms20m -Djava.security.egd=file:/dev/./urandom -Duser.home=/home/jboss'
         name: JAVA_OPTS
       - value: $(JAVA_OPTS)
-        name: MAVEN_OPTS
-  - id: redhat/vscode-xml/latest
-    type: chePlugin
-  - id: redhat/vscode-yaml/latest
-    type: chePlugin
-  - id: redhat/java/latest
-    type: chePlugin
+        name: MAVEN_OPTS  
 commands:
   - name: 1. Package the application
     actions:
-      - workdir: '${CHE_PROJECTS_ROOT}/build-options-quarkus'
+      - workdir: '${CHE_PROJECTS_ROOT}/quarkus-build-options'
         type: exec
         command: mvn package
         component: maven
   - name: 2. Start Quarkus in devmode (hot deploy + debug)
     actions:
-      - workdir: '${CHE_PROJECTS_ROOT}/build-options-quarkus'
+      - workdir: '${CHE_PROJECTS_ROOT}/quarkus-build-options'
         type: exec
         command: 'mvn compile quarkus:dev -Dquarkus.http.host=0.0.0.0 -Dquarkus.live-reload.instrumentation=false'
         component: maven
@@ -72,13 +63,7 @@ commands:
         type: vscode-launch
   - name: install odo
     actions:
-      - workdir: '${CHE_PROJECTS_ROOT}/build-options-quarkus'
+      - workdir: '${CHE_PROJECTS_ROOT}/quarkus-build-options'
         type: exec
         command: 'rm odo; curl https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-amd64.tar.gz -s | tar zxv && chmod 755 odo'
-        component: maven
-  - name: install oc
-    actions:
-      - workdir: '${CHE_PROJECTS_ROOT}/build-options-quarkus'
-        type: exec
-        command: 'rm oc; curl https://mirror.openshift.com/pub/openshift-v4/clients/oc/latest/linux/oc.tar.gz -s | tar zxv && chmod 755 oc'
-        component: maven       
+        component: maven  
